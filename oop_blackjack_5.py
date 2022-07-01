@@ -38,7 +38,7 @@ class Player:
         self.name = name
         self.score = ""
         
-    # getters
+    # getters 
     def get_name(self):
         return self.name
     def get_score(self):
