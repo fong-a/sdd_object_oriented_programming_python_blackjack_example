@@ -1,6 +1,11 @@
-# 12SDD Object Oriented Programming - Blackjack Game Example
+# ♠️♣️♥️♦️ 12SDD Object Oriented Programming - Blackjack Game Example
 
-The slides and associated code cover the following topic areas for HSC SDD:
+Website
+
+🌍 Step by step guides can be found at the following URL (viewable in browser)
+https://fong-a.github.io/sdd_object_oriented_programming_python_blackjack_example/
+
+ℹ️ The project covers following topic areas for HSC SDD: Programming Paradigms:
 
   🔷 Class definitions
   
@@ -9,10 +14,6 @@ The slides and associated code cover the following topic areas for HSC SDD:
   🔷 Instantiation
   
   🔷 Attributes and Methods
-  
-  🔷 Inheritance
-  
-  🔷 Polymorphism
   
   🔷 Enacapsulation
  
