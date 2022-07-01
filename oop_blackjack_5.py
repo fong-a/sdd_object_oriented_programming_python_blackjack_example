@@ -46,7 +46,7 @@ class Player:
     
     # setters
     def set_score(self,new_score):
-        pass
+        self.score = new_score
     
 game_deck = Deck()
 player_name = input("What is your name? ")
