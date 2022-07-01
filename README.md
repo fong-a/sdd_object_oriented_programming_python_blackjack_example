@@ -1,4 +1,4 @@
-# ♠️♣️♥️♦️ 12SDD Object Oriented Programming - Blackjack Game Example
+# 12SDD Object Oriented Programming - Blackjack Game Example
 
 Website
 
