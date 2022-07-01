@@ -1,0 +1,698 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Object Oriented Paradigm 8 - Encapsulation Extension </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="73db2d5a-cfb3-4657-b637-077b9cd76939" class="page sans"><header><h1 class="page-title">Object Oriented Paradigm 8 - Encapsulation Extension </h1></header><div class="page-body"><h2 id="b0cd7e55-8a12-4404-a951-ef668a051144" class="">Access Modifiers</h2><p id="165a155d-a2a6-4121-9968-58f6eb352e61" class="">
+</p><p id="66aa8379-6dd2-467a-b124-13775946ed3d" class="">Individual programming languages can help you implement encapsulation further by the use of <strong>access modifiers</strong>. These will specify which properties (attributes and methods) can be accessed from outside the class.</p><p id="bc385787-2add-4330-a0e7-de374b596cfd" class="">
+</p><p id="dee18b84-e5d8-4ab0-b9ff-b9cd0beb0afb" class="">Recall that we provide getters, setters, and other methods to work with an object&#x27;s data. Most of these methods will be specified as <strong>public</strong>. This means that another part of the system can call them (pass a message to them). So, during game play, when a player wins a hand, the player&#x27;s <code>set_score</code> method will be used to modify that player&#x27;s score. The score attribute will have been specified as <strong>private</strong>. This will prevent it from being accessed directly.</p><p id="9fcc5e56-a262-436c-a3f5-f69825a32cec" class="">
+</p><p id="333a08d8-fec6-4e8f-a535-168d075d53eb" class="">Where a programming language supports access modifiers, you would usually make all attributes private (so that data cannot be manipulated directly), and make most methods public (so that they can be invoked where access to data is needed). Methods that are used within the class (maybe to break down complex pieces of code) can be specified as private so that they can&#x27;t be called by other objects.</p><p id="28958768-3016-422b-9967-690a3eacd6d7" class="">
+</p><p id="7a29de0e-25f3-4a81-92d4-7f95d4a47ae4" class="">There is a third access modifier: <strong>protected</strong>. You will learn about this when you look at the key OOP concept of inheritance.</p><p id="5592133c-d6ab-4f9b-83f7-2d6bcd2a84b2" class="">
+</p><p id="6b061e56-4b9d-4780-91c2-53ac767e5998" class="">In UML class diagrams, these access modifiers are noted using the following symbols:</p><p id="4b2c3bcd-403f-4b7e-ab57-1c4b47e11f58" class="">
+</p><figure id="6ea39171-740e-4fbd-9e8e-75279b0f52aa" class="image"><a href="Object%20Oriented%20Paradigm%208%20-%20Encapsulation%20Extensi%2073db2d5acfb34657b637077b9cd76939/Isaac_Computer_Science_OOP_Project_V6_Artboard_14.svg"><img style="width:720px" src="Object%20Oriented%20Paradigm%208%20-%20Encapsulation%20Extensi%2073db2d5acfb34657b637077b9cd76939/Isaac_Computer_Science_OOP_Project_V6_Artboard_14.svg"/></a></figure><p id="41a7d0aa-d17b-487d-9920-7e3a0575efc6" class="">
+</p><p id="8a2dd854-a679-45a6-b18a-edff3c7db4b3" class="">The Player class definition, complete with access modifiers, would look like this:</p><p id="c4a71593-43a4-4b8b-9c17-c8d1d026994a" class="">
+</p><figure id="44d21b06-556f-4ce4-82df-4048fe23b161" class="image"><a href="Object%20Oriented%20Paradigm%208%20-%20Encapsulation%20Extensi%2073db2d5acfb34657b637077b9cd76939/Isaac_Computer_Science_OOP_Project_V6_Artboard_15.svg"><img style="width:672px" src="Object%20Oriented%20Paradigm%208%20-%20Encapsulation%20Extensi%2073db2d5acfb34657b637077b9cd76939/Isaac_Computer_Science_OOP_Project_V6_Artboard_15.svg"/></a></figure><h2 id="c632c09d-3061-4bac-a98f-616cd30ff708" class="">Encapsulation as a form of data hiding</h2><p id="81b7186f-844a-4d97-8cfc-22fbfb3a9e88" class="">
+</p><p id="87a568bb-b99f-4ef0-99bc-39d4ff3cd282" class="">Encapsulation is a form of <strong>data hiding</strong>. The inner details and workings of the class do not need to be understood by anyone other than the class designer. Classes are often provided as part of software libraries for programmers to make use of. Each library will have documentation that will tell you the names of the classes and the (public) methods that you can use.</p><p id="ce033ff9-1f23-4274-9e08-4513f8cfd343" class="">
+</p><p id="eb970dfe-de05-47fc-8f8e-7eed15b03df3" class="">For example, consider a software library with prewritten classes that can produce simple charts and graphs.</p><p id="0616b006-8abc-44d6-9740-887f5499cb90" class="">
+</p><figure id="e86912b9-bdd2-4b33-ba9e-01791ee7822d" class="image"><a href="Object%20Oriented%20Paradigm%208%20-%20Encapsulation%20Extensi%2073db2d5acfb34657b637077b9cd76939/Untitled.png"><img style="width:699px" src="Object%20Oriented%20Paradigm%208%20-%20Encapsulation%20Extensi%2073db2d5acfb34657b637077b9cd76939/Untitled.png"/></a></figure><p id="6f4551fb-7d81-4cb7-82aa-d519e3a6e084" class="">
+</p><p id="8d20b06a-8263-432b-93b9-9594b094a388" class="">Using this most basic documentation, you will be able to produce a pie chart.</p><p id="eb42ae68-b5a5-4035-ad91-a2c7372b1f2f" class="">
+</p><pre id="05893bf7-861a-4457-b5f9-b078e7c7961f" class="code"><code>chart = new PieChart()
+chart.setLabels(&#x27;Chocolate&#x27;, &#x27;Carrot&#x27;, &#x27;Coffee&#x27;, &#x27;Vanilla&#x27;, &#x27;Red velvet&#x27;)
+chart.setValues(12, 2, 3, 5, 16)
+chart.setColours(&#x27;Yellow&#x27;, &#x27;Blue&#x27;, &#x27;Purple&#x27;, &#x27;Green&#x27;, &#x27;Red&#x27;)
+chart.setTitle(&#x27;Favourite Cakes&#x27;)</code></pre><p id="9f2f1bf7-f30d-44ea-97e2-c1907a30c1fa" class="">
+</p><figure id="441948d6-edc9-4c8c-af62-cc61efb60527" class="image"><a href="Object%20Oriented%20Paradigm%208%20-%20Encapsulation%20Extensi%2073db2d5acfb34657b637077b9cd76939/Isaac_Computer_Science_OOP_Project_V6_Artboard_16.svg"><img style="width:768px" src="Object%20Oriented%20Paradigm%208%20-%20Encapsulation%20Extensi%2073db2d5acfb34657b637077b9cd76939/Isaac_Computer_Science_OOP_Project_V6_Artboard_16.svg"/></a></figure><p id="008ac1ab-8ad9-4c31-88c7-e6f45dc02195" class="">You do not need to see the class&#x27;s implementation to make use of the class. You don&#x27;t need to know the names or data types of the attributes, nor the names of any private methods, nor how any of the methods are coded.</p><p id="fd9fff9a-a1e2-4562-b050-5a3d2e76cf4f" class="">
+</p><h2 id="9b25478c-1063-4c0a-839e-fe412b78f81a" class="">Interaction between objects</h2><p id="a5d942dc-b212-469a-a777-cd17a4246a31" class="">
+</p><p id="5ff451fe-114e-4693-8299-c924fd050903" class="">Objects interact by &#x27;message passing&#x27;. This just means that they call each other&#x27;s public methods. At this stage, you have not yet designed the class to represent a hand of cards, but imagine that you have a class called Hand and that it encapsulates a public <code>add</code> method (so that cards can be added to a hand).</p><p id="b2746d92-049f-43d8-a350-f5ca1258c7dc" class="">
+</p><p id="3a5ede55-fb65-47ac-9fbe-73103ea912a3" class="">The pseudocode below shows how a card could be dealt from a deck and added to a hand.</p><p id="d71f7ca2-a999-406d-b464-ce1ed5e01c60" class="">
+</p><pre id="61ab72f7-fe97-4624-b867-2396bfb61eda" class="code"><code>1. game_deck = Deck()
+2. player_hand = Hand()
+3. dealt_card = game_deck.deal(1)
+4. player_hand.add(dealt_card)</code></pre><p id="2bfd774f-5bc0-4049-8dc5-d96d6afb33c5" class="">
+</p><p id="df724cce-8d7e-462e-8930-9d47c8ea8fe4" class="">Line 1: creates an instance of a card deck (complete with 52 cards)</p><p id="7f03a3ce-ed45-4202-be7b-143b5dbe8e14" class="">Line 2: creates an instance of a player hand</p><p id="a5fa8fd8-4361-4a40-8504-75690849358e" class="">Line 3: uses the deal method of the Deck class to remove a card from the deck</p><p id="1b2e72cf-e239-4834-a6b9-d06ebdd5139f" class="">Line 4: uses the add method of the Hand class to add the card to the player&#x27;s hand</p><p id="3a8ff92c-61b4-4d83-b065-3d8e712ab187" class="">
+</p><p id="0830c610-dcd6-441b-9afd-eb0472b2ec9c" class="">Lines 3 and 4 could be combined to better demonstrate the interaction:</p><p id="67467bef-041b-4bf3-96b3-9f4ba0319e41" class="">
+</p><p id="7132f43c-4bff-4d29-9ce9-5ecaeef1f736" class="">player_hand.add(game_deck.deal(1))</p><p id="4ebc6aa5-c043-432d-8fe9-cfbb88afdead" class="">
+</p><h2 id="981789d2-b64b-47db-aaf5-e0bc5fe010b0" class="">Summary</h2><ul id="7693491c-7037-4b67-a7f6-2b4f3613e997" class="bulleted-list"><li style="list-style-type:disc"><strong>Encapsulation</strong> means protecting data by bundling the data and the methods that work on that data within a class.</li></ul><ul id="078c6dc2-6be3-4ada-944c-20e44f880c35" class="bulleted-list"><li style="list-style-type:disc">The attributes should be declared as <strong>private</strong>, which means that they are hidden within the class.</li></ul><ul id="37a4e119-244e-4170-b9c9-0542bd417b6b" class="bulleted-list"><li style="list-style-type:disc"><strong>Public</strong> methods must be provided to access or modify attributes (as required). These methods are known, colloquially, as <strong>getters and setters</strong>.</li></ul><ul id="07e1b08f-c479-4ec1-a8f2-8c59a398deed" class="bulleted-list"><li style="list-style-type:disc"><strong>Accessors and mutators</strong> are the formal names for getters and setters.</li></ul><ul id="f780a42b-4556-44f7-94dd-e80642d1dd49" class="bulleted-list"><li style="list-style-type:disc">Objects interact by <strong>passing messages</strong>.</li></ul><ul id="57dff83e-cca1-4f3a-8ebf-faa091a99df7" class="bulleted-list"><li style="list-style-type:disc">Designing classes to be <strong>stand-alone</strong> allows class designers to change the implementation details without any adverse effect on the applications that make use of them.</li></ul></div></article></body></html>
